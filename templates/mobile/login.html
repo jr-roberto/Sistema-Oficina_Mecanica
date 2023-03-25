@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/login.css') }}">
+{% endblock %}
+
+{% block conteudo %}
+
+<form class="mobile" method="post">
+
+    <h1>Bem Vindo</h1>
+
+    <div class="input">
+        <label for="usuario">Identifique se</label>
+        <input type="text" name="usaurio" id="usuario">
+    </div>
+
+    <div class="input" hidden>
+        <label for="senha">Senha</label>
+        <input type="password" name="senha" id="senha">
+    </div>
+
+    <div class="entrar">
+        <input type="submit" value="Cliente">
+        <input type="button" value="Funcionario">
+    </div>
+
+</form>
+
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static',filename='js/login.js') }}"></script>
+{% endblock %}

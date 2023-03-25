@@ -1,0 +1,31 @@
+* {margin: 0; box-sizing: border-box;}
+
+body {width: 100vw; height: 100vh;}
+
+form.mobile {
+    padding: 10px;
+}
+
+form.mobile > h1 {
+    text-align: center;
+    margin-bottom: 20vh;
+}
+
+form.mobile > div.input,
+form.mobile > div.entrar {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+form.mobile > div.input > label,
+form.mobile > div.input > input,
+form.mobile > div.entrar > input {
+    width: 100%;
+    font-size: 18px;
+    padding: 10px;
+}
+
+form.mobile > div.entrar > input {
+    margin-top: 5px;
+}
+

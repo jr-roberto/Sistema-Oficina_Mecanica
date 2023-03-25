@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/login.css') }}">
+{% endblock %}
+
+{% block conteudo %}
+
+<h1>Ambiente Web</h1>
+
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static',filename='js/login.js') }}"></script>
+{% endblock %}
