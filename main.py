@@ -1,39 +1,30 @@
 from flask import Flask , request , render_template , redirect
 from datetime import datetime, timedelta
+import pandas as pd
 
 def log_secao(ip_alvo):
-    agora = datetime.now().timestamp()
-    fim = agora + timedelta(minutes=5)
+    agora = datetime.now()
+    fim = (agora + timedelta(minutes=5)).strftime("%Y%m%d%H%M%S")
+    agora = agora.strftime("%Y%m%d%H%M%S")
 
-    with open("banco_dados/_logSecao.txt") as file:
-        rows = file.read().split("\n")
+    input(agora)
+    input(fim)
 
-    lista_ip = []
-    for ln in rows:
-        if ln[0] != "":
-            cols = ln.split(";")
+    df = pd.read_csv("banco_dados/_logSecao.csv",sep=",",header=None)
 
-            ip = cols[0]
-            ini_sec = cols[1]
-            fim_sec = cols[2]
+    lista_ip = list(df[0])
 
-            lista_ip.append(ip)
+    if ip_alvo in lista_ip:
+        query_ip = df[( df[0] == ip_alvo )]
 
-            if ip_alvo in lista_ip:
-                if fim_sec < agora:
-                    ini_sec_novo = agora
-                    fim_sec_novo = fim
+        fim_sec = float(query_ip[2])
 
-                    cols[1] = ini_sec_novo
-                    cols[2] = fim_sec_novo
+        if fim_sec < fim:
+            df.loc[query_ip.index.to_list()[0],[2]] = fim
+            df.to_csv("banco_dados/_logSecao.csv",sep=",",index=False)
+            return False
 
-                    remover_ln = ln
-                    adiciona_ln = [ip,ini_sec_novo,fim_sec_novo]
-
-
-            input(lista_ip)
-
-    ip = ""
+log_secao('1.1.1.3')
 
 app  = Flask(__name__)
 
