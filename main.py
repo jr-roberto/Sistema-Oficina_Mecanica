@@ -7,24 +7,21 @@ def log_secao(ip_alvo):
     fim = (agora + timedelta(minutes=5)).strftime("%Y%m%d%H%M%S")
     agora = agora.strftime("%Y%m%d%H%M%S")
 
-    input(agora)
-    input(fim)
+    df = pd.read_csv("banco_dados/log_secao.csv",sep=";")    
 
-    df = pd.read_csv("banco_dados/_logSecao.csv",sep=",",header=None)
+    values = df.values
+    lista_ip = list(df["endereco_ip"])
 
-    lista_ip = list(df[0])
+    if ip_alvo not in lista_ip:
+        values.append([ip_alvo,agora,fim])
 
-    if ip_alvo in lista_ip:
-        query_ip = df[( df[0] == ip_alvo )]
+        return True
 
-        fim_sec = float(query_ip[2])
-
-        if fim_sec < fim:
-            df.loc[query_ip.index.to_list()[0],[2]] = fim
-            df.to_csv("banco_dados/_logSecao.csv",sep=",",index=False)
-            return False
-
-log_secao('1.1.1.3')
+def novo_endereco_ip(base):
+    columns = ['endereco_ip','inicio_sec','fim_secao']
+    values = base
+    df_novo = pd.DataFrame(data=values,columns=columns)
+    return df_novo.to_csv("banco_dados/log_secao.csv",sep=";")
 
 app  = Flask(__name__)
 
