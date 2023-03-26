@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block style %}
+<style>
+
+* {margin: 0;box-sizing: border-box;font-family: monospace;}
+body {width: 100%; height: 100%;}
+
+div.menu-sist {
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%,-50%);
+    width: 90%;
+    padding: 10px 0;
+}
+
+div.menu-sist > div {
+    width: 100%;
+    font-size: 25px;
+    padding: 25px 0;
+    text-align: center;
+    background: lightblue;
+    border-bottom: solid 5px blue;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px black;
+    transition: .2s;
+}
+
+div.menu-sist > div:active {
+    scale: 1.05;
+    background: blue;
+    color: white;
+    border-bottom: solid 5px lightblue;
+}
+
+</style>
+{% endblock %}
+
+{% block conteudo %}
+
+<div class="menu-sist">
+
+    <div>Atender Cliente</div>
+    <div>Iniciar Servico</div>
+    <div hidden>Finalizar Servico</div>
+
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+
+
+
+</script>
+{% endblock %}

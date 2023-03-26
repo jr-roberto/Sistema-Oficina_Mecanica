@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/loja.css') }}">
+{% endblock %}
+
+{% block conteudo %}
+
+<h1>GSM <p>G. Serviços Mecanicos</p></h1>
+
+<div class="ident-func">
+
+    <div class="img">
+        <img src="{{ url_for('static',filename='img/mecanico.png') }}" alt="">
+    </div>
+    <div class="nome-funcionario">Nome do funcionario aqui</div>
+
+</div>
+
+<iframe class="app-loja" src="/servico" frameborder="0"></iframe>
+
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static',filename='js/loja.js') }}"></script>
+{% endblock %}

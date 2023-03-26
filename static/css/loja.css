@@ -1,0 +1,50 @@
+* {margin: 0; box-sizing: border-box;font-family: monospace;}
+
+body {width: 100vw; height: 100%;}
+
+/* Titulo */
+h1 {
+    text-align: center;
+    background: blue;
+    color: white;
+    padding: 5px 0;
+    font-size: 18px;
+    height: 60px;
+}
+
+/* Ident funcionario */
+div.ident-func {
+    position: relative;
+    height: 100px;
+    width: 100%;
+    border-bottom: 5px blue solid;
+    background: lightblue;
+}
+
+div.img {
+    position: absolute;
+    width: 100px;
+    height: 100%;
+    padding: 5px;
+}
+
+div.img > img {
+    width: 100%;
+}
+
+div.nome-funcionario {
+    position: relative;
+    left: 105px;
+    font-size: 18px;
+    width: calc(100% - 110px);
+}
+
+/* Menu inicial */
+iframe.app-loja {
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 160px);
+    bottom: 0;
+    background: gray;
+}
+

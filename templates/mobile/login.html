@@ -5,23 +5,25 @@
 
 {% block conteudo %}
 
-<form class="mobile" method="post">
+<h1>Bem Vindo</h1>
 
-    <h1>Bem Vindo</h1>
+<form class="mobile" method="post" id="formLogin">
 
     <div class="input">
-        <label for="usuario">Identifique se</label>
-        <input type="text" name="usaurio" id="usuario">
+        <label for="usuario">Identifique se com (CPF)</label>
+        <input type="number" name="usuario" id="usuario">
     </div>
 
+    <!--
     <div class="input" hidden>
         <label for="senha">Senha</label>
         <input type="password" name="senha" id="senha">
     </div>
+    -->
 
     <div class="entrar">
-        <input type="submit" value="Cliente">
-        <input type="button" value="Funcionario">
+        <input type="button" value="Cliente" id="cliente">
+        <input type="button" value="Funcionario" id="funcionario">
     </div>
 
 </form>
