@@ -2,26 +2,42 @@ from flask import Flask , request , render_template , redirect
 from datetime import datetime, timedelta
 import pandas as pd
 
+# Veerifica se secao é valida 
 def log_secao(ip_alvo):
     agora = datetime.now()
-    fim = (agora + timedelta(minutes=5)).strftime("%Y%m%d%H%M%S")
-    agora = agora.strftime("%Y%m%d%H%M%S")
+
+    # Definir o tempo maximo para sessao valida
+    fim = int((agora + timedelta( minutes=30 )).strftime("%Y%m%d%H%M%S"))
+    agora = int(agora.strftime("%Y%m%d%H%M%S"))
 
     df = pd.read_csv("banco_dados/log_secao.csv",sep=";")    
 
-    values = df.values
+    values = list(df.values)
+
     lista_ip = list(df["endereco_ip"])
 
     if ip_alvo not in lista_ip:
         values.append([ip_alvo,agora,fim])
+        salvar_log(values)
+        return False
 
-        return True
+    if ip_alvo in lista_ip:
+        query = df[(df["endereco_ip"]==ip_alvo)]
+        fim_sec = query["fim_secao"].values[0]
 
-def novo_endereco_ip(base):
+        if fim_sec > agora:
+            return True
+        else:
+            df.loc[query.index[0],['inicio_sec','fim_secao']] = [agora,fim]
+            values = df.values
+            salvar_log(values)
+            return False
+
+def salvar_log(base):
     columns = ['endereco_ip','inicio_sec','fim_secao']
     values = base
     df_novo = pd.DataFrame(data=values,columns=columns)
-    return df_novo.to_csv("banco_dados/log_secao.csv",sep=";")
+    return df_novo.to_csv("banco_dados/log_secao.csv",sep=";", index=False)
 
 app  = Flask(__name__)
 
@@ -53,6 +69,10 @@ def index():
 def loja():
     # Verifica - Plataform
     plataform = request.user_agent.string.lower()
+    ip_client = request.remote_addr
+
+    if log_secao(ip_client) == False:
+        return redirect("/")
 
     if "android" in plataform:
         return render_template("mobile/loja.html")
