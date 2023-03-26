@@ -8,7 +8,7 @@ Para inciar a applicação seguir os passos abaixo
 
 1 - Instalar python
 
-2 - Iniciar uma venv ( Ambiente virtual Python ' Na rais do projeto ' )
+2 - Iniciar uma venv ( Ambiente virtual Python ' Na raiz do projeto ' )
 
 3 - Instalar as dependencias contidas no arquivo requeriments.txt
 
