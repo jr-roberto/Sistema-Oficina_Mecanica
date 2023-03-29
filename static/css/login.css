@@ -1,6 +1,6 @@
 * {margin: 0; box-sizing: border-box;font-family: monospace;}
 
-body {width: 100vw; height: 100%;}
+body {width: 100vw; height: 100%; background: rgb(113, 140, 149);}
 
 form.mobile {
     padding: 20px;
@@ -9,8 +9,8 @@ form.mobile {
 h1 {
     text-align: center;
     margin-bottom: 30vh;
-    background: blue;
-    color: white;
+    background: lightblue;
+    border-bottom: solid 5px blue;
     padding: 5px;
 }
 
@@ -27,12 +27,23 @@ form.mobile > div.input > label {
 form.mobile > div.input > input,
 form.mobile > div.entrar > input {
     width: 100%;
-    font-size: 20px;
+    font-size: 25px;
     padding: 10px;
     text-align: center;
+    border-radius: 5px;
 }
 
 form.mobile > div.entrar > input {
     margin-top: 10px;
+    background: lightblue;
+    border-bottom: solid 5px blue;
+    transition: .1s;
+}
+
+form.mobile > div.entrar > input:active {
+    scale: 1.05;
+    background: blue;
+    border-bottom: solid 5px lightblue;
+    color: white;
 }
 
