@@ -96,6 +96,57 @@ div.frameDados {
     margin-top: 10px;
 }
 
+div.frameDados > div.cliente {
+    position: relative;
+    width: 90%;
+    border-bottom: solid 5px grey;
+    padding: 10px 0;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+div.frameDados > div.cliente > div.input {
+    width: 100%;
+    margin-top: 5px;
+}
+
+div.frameDados > div.cliente > div.input > input,
+div.frameDados > div.cliente > div.input > label {
+    width: 100%;
+    font-size: 20px;
+    padding: 5px;
+}
+
+div.frameDados > div.veiculo {
+    position: relative;
+    width: 90%;
+    padding: 10px 0;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+div.frameDados > div.veiculo > div.tipo_veiculo {
+    box-shadow: 0 0 5px grey;
+}
+
+#imgVeiculo.vermelho {
+    filter: invert(27%) sepia(73%) saturate(7457%) hue-rotate(354deg) brightness(89%) contrast(127%);
+}
+
+#imgVeiculo.prata {
+    filter: invert(82%) sepia(7%) saturate(14%) hue-rotate(319deg) brightness(99%) contrast(78%);
+}
+
+#imgVeiculo.azul {
+    filter: invert(11%) sepia(99%) saturate(3978%) hue-rotate(243deg) brightness(112%) contrast(159%);
+}
+
+#imgVeiculo.verde {
+    filter: invert(25%) sepia(99%) saturate(1502%) hue-rotate(95deg) brightness(96%) contrast(107%);
+}
+
 
 </style>
 {% endblock %}
@@ -120,7 +171,58 @@ div.frameDados {
 
         <div class="frameDados">
 
-            <h1 id="respostaServidor">Inicie buscando o cliente</h1>
+            <div class="cliente">
+                <h1>Cliente</h1>
+
+                <div class="input">
+                    <input type="text" name="nome_completo" id="nome_completo" disabled>
+                </div>
+                
+                <div class="input">
+                    <label for="nome_completo">Nome</label>
+                    <input type="text" name="nome_completo" id="nome_completo">
+                </div>
+
+                <div class="input">
+                    <label for="contato">Contato</label>
+                    <input type="text" name="contato" id="contato">
+                </div>
+
+                <div class="input">
+                    <label for="cpf">CPF - Acesso</label>
+                    <input type="text" name="cpf_acesso" id="cpf_acesso">
+                </div>
+
+            </div>
+
+            <div class="veiculo">
+                <h1>Veiculo</h1>
+                <img src="" alt="" id="imgVeiculo">
+
+                <div class="tipo_veiculo">
+                    <p>Caracteristicas</p>
+
+                    Tipo
+                    <select name="tipoVeiculo" id="tipoVeiculo">
+                        <option value="0">-</option>
+                        <option value="carro">Carro</option>
+                        <option value="moto">Moto</option>
+                    </select>
+
+                    Cor
+                    <select name="corVeiculo" id="corVeiculo">
+                        <option value="0">-</option>
+                        <option value="vermelho">Vermelho</option>
+                        <option value="prata">Prata</option>
+                        <option value="azul">Azul</option>
+                        <option value="verde">Verde</option>
+                    </select>
+
+
+                </div>
+
+            </div>
+
 
         </div>
 
@@ -143,6 +245,53 @@ div.frameDados {
 
     const btnBuscar = document.getElementById("btnBuscar");
     const respostaServidor = document.getElementById("respostaServidor");
+    const tipoVeiculo = document.getElementById("tipoVeiculo");
+    const corVeiculo = document.getElementById("corVeiculo");
+
+    tipoVeiculo.addEventListener("change",()=>{
+        let imgVeiculo = document.getElementById("imgVeiculo");
+
+        switch (tipoVeiculo.value) {
+            case 'moto':
+                imgVeiculo.src = "{{ url_for('static',filename='img/moto.png') }}";
+                break;
+        
+            case 'carro':
+                imgVeiculo.src = "{{ url_for('static',filename='img/carro.png') }}";
+                break;
+
+            default:
+                imgVeiculo.src = "";
+                break;
+        }
+    })
+
+    
+    corVeiculo.addEventListener("change",()=>{
+        let imgVeiculo = document.getElementById("imgVeiculo");
+
+        switch (corVeiculo.value) {
+            case 'vermelho':
+                imgVeiculo.setAttribute("class","vermelho");
+                break;
+
+            case 'prata':
+                imgVeiculo.setAttribute("class","prata");
+                break;            
+            
+            case 'azul':
+                imgVeiculo.setAttribute("class","azul");
+                break;
+
+            case 'verde':
+                imgVeiculo.setAttribute("class","verde");
+                break;
+
+            default:
+                imgVeiculo.setAttribute("class","");
+                break;
+        }
+    })
 
     function reqListener() {
         respostaServidor.innerHTML = this.responseText;
@@ -156,6 +305,7 @@ div.frameDados {
         req.send();
     }
 
+    /*
     btnBuscar.addEventListener("click",()=>{
         let cpd_digitado = document.getElementById("cpf_cliente").value;
 
@@ -164,6 +314,7 @@ div.frameDados {
         }
 
     })
+    */
 
 
 </script>
