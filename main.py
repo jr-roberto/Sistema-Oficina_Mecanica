@@ -88,6 +88,9 @@ def servico():
 def cliente():
     return render_template("mobile/cliente.html")
 
+@app.route("/pesquisa_cliente/<cpf>")
+def pesq_cliente(cpf):
+    return {"resposta":f"O servidor recebeu : {cpf}"}
 
 if __name__ == "__main__":
     app.run(debug=True,host="0.0.0.0")

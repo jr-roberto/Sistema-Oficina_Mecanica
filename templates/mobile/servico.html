@@ -33,14 +33,104 @@ div.menu-sist > div:active {
     border-bottom: solid 5px lightblue;
 }
 
+div.popup {
+    position: absolute;
+    background: rgba(0,0,0,.9);
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    overflow: auto;
+    padding: 10px;
+}
+
+div.popup > div.frame {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+div.buscaCliente {
+    position: relative;
+    background: white;
+    width: 100%;
+    height: 60px;
+}
+
+div.buscaCliente > div {
+    position: absolute;
+}
+
+div.buscaCliente > div.input {
+    height: 100%;
+    width: calc(100% - 60px);
+    padding: 5px;
+}
+
+div.buscaCliente > div.input > input {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    padding: 5px;
+    font-size: 20px;
+}
+
+div.buscaCliente > div.btnBuscar {
+    height: 60px;
+    width: 60px;
+    right: 0;
+}
+
+div.buscaCliente > div.btnBuscar > img {
+    width: 60px;
+}
+
+div.buscaCliente > div.btnBuscar > img:active {
+    scale: .90;
+}
+
+div.frameDados {
+    position: relative;
+    background: white;
+    width: 100%;
+    height: calc(100% - 70px);
+    margin-top: 10px;
+}
+
+
 </style>
 {% endblock %}
 
 {% block conteudo %}
 
+<div class="popup">
+
+    <div class="frame">
+
+        <div class="buscaCliente">
+
+            <div class="input">
+                <input type="number" name="cpf_cliente" id="cpf_cliente">
+            </div>
+
+            <div class="btnBuscar" id="btnBuscar">
+                <img src="{{ url_for('static',filename='img/pesquisa.png') }}" alt="">
+            </div>
+
+        </div>
+
+        <div class="frameDados">
+
+            <h1 id="respostaServidor">Inicie buscando o cliente</h1>
+
+        </div>
+
+    </div>
+
+</div>
+
 <div class="menu-sist">
 
-    <div>Atender Cliente</div>
+    <div id="btnAtenderCliente" >Atender Cliente</div>
     <div>Iniciar Servico</div>
     <div hidden>Finalizar Servico</div>
 
@@ -51,6 +141,29 @@ div.menu-sist > div:active {
 {% block script %}
 <script>
 
+    const btnBuscar = document.getElementById("btnBuscar");
+    const respostaServidor = document.getElementById("respostaServidor");
+
+    function reqListener() {
+        respostaServidor.innerHTML = this.responseText;
+    }
+
+    function pesquisaCliente(cpf){
+        const req = new XMLHttpRequest();
+        let host = document.location.host;
+        req.addEventListener("load", reqListener);
+        req.open("GET", `http://${host}/pesquisa_cliente/${cpf}`);
+        req.send();
+    }
+
+    btnBuscar.addEventListener("click",()=>{
+        let cpd_digitado = document.getElementById("cpf_cliente").value;
+
+        if (cpd_digitado){
+            pesquisaCliente(cpd_digitado)
+        }
+
+    })
 
 
 </script>
