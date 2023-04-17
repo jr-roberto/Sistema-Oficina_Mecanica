@@ -1,0 +1,373 @@
+{% extends "base.html" %}
+{% block style %}
+
+<style>
+    * {
+        margin: 0;
+        box-sizing: border-box;
+        font-family: monospace;
+    }
+
+    body {
+        width: 100%;
+        height: 100%;
+    }
+
+    /* Formulario */
+    div.formCLienteVeiculo {
+        padding: 5px;
+    }
+
+    div.formCLienteVeiculo h1.titulo {
+        background: blue;
+        color: white;
+        text-align: center;
+    }
+
+    /* Formulario > Cliente */
+    div.cliente {
+        border-bottom: solid 5px gray;
+        padding-bottom: 10px;
+    }
+
+    div.cliente div.input {
+        width: 100%;
+        margin-top: 10px;
+        padding: 0 10px;
+    }
+
+    div.cliente div.input label,
+    div.cliente div.input input {
+        width: 100%;
+        font-size: 18px;
+        border-radius: 5px;
+    }
+
+    div.cliente div.input input {
+        padding: 5px;
+    }
+
+    /* Formulario > Veiculo */
+    div.veiculo {
+        border-bottom: solid 5px gray;
+        padding-bottom: 10px;
+        margin-top: 10px;
+    }
+
+    div.veiculo div.imgVeiculo {
+        height: 100px;
+        text-align: center;
+        padding: 5px 0;
+        border-bottom: 5px solid blue;
+        border-radius: 5px;
+        margin-top: 5px;
+        transition: .5s;
+    }
+
+    div.veiculo div.imgVeiculo.bgBlack {
+        background: black;
+    }
+
+    div.veiculo div.imgVeiculo img {
+        height: 100%;
+        position: relative;
+    }
+
+    div.veiculo div.input {
+        width: 100%;
+        margin-top: 10px;
+        padding: 0 10px;
+    }
+
+    div.veiculo div.input label,
+    div.veiculo div.input input,
+    div.veiculo div.input select {
+        width: 100%;
+        font-size: 18px;
+        padding: 10px 0;
+        border-radius: 5px;
+    }
+
+    div.veiculo div.input input,
+    div.veiculo div.input select {
+        padding: 5px;
+        text-align: center;
+    }
+
+    div.veiculo div.btn {
+        height: 60px;
+        margin-top: 20px;
+        padding: 10px;
+    }
+
+    div.veiculo div.btn button {
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        font-size: 20px;
+        transition: .1s;
+    }
+
+    div.veiculo div.btn button:active {
+        scale: .96;
+    }
+
+    /*Base de COres do veiculo*/
+    #imgVeiculo.branco {
+        filter: invert(93%) sepia(7%) saturate(0%) hue-rotate(112deg) brightness(105%) contrast(107%);
+    }
+
+
+    #imgVeiculo.cinza {
+        filter: invert(80%) sepia(3%) saturate(0%) hue-rotate(198deg) brightness(104%) contrast(97%);
+    }
+
+    #imgVeiculo.preto {
+        filter: invert(0%) sepia(0%) saturate(15%) hue-rotate(130deg) brightness(89%) contrast(100%);
+    }
+
+    #imgVeiculo.prata {
+        filter: invert(77%) sepia(28%) saturate(17%) hue-rotate(28deg) brightness(96%) contrast(90%);
+    }
+
+    #imgVeiculo.azul {
+        filter: invert(15%) sepia(28%) saturate(6245%) hue-rotate(229deg) brightness(94%) contrast(122%);
+    }
+
+    #imgVeiculo.vermelho {
+        filter: invert(13%) sepia(56%) saturate(6687%) hue-rotate(356deg) brightness(120%) contrast(118%);
+    }
+
+    #imgVeiculo.marrom_bege {
+        filter: invert(74%) sepia(40%) saturate(314%) hue-rotate(355deg) brightness(93%) contrast(80%);
+    }
+
+    #imgVeiculo.verde {
+        filter: invert(22%) sepia(97%) saturate(2225%) hue-rotate(97deg) brightness(97%) contrast(102%);
+    }
+
+    #imgVeiculo.laranja {
+        filter: invert(72%) sepia(47%) saturate(5784%) hue-rotate(359deg) brightness(101%) contrast(101%);
+    }
+</style>
+
+{% endblock %}
+
+{% block conteudo %}
+
+<div class="formCLienteVeiculo">
+
+    <form id="formEnvio" hidden>
+
+        <input type="text" name="idUsuario" disabled required>
+        <input type="text" name="nomeCliente" disabled required>
+        <input type="text" name="contatoCliente" disabled required>
+        <input type="text" name="acessoCliente" disabled required>
+        <input type="text" name="placaVeiculo" disabled required>
+        <input type="text" name="tipoVeiculo" disabled required>
+        <input type="text" name="corVeiculo" disabled required>
+
+    </form>
+
+    <div class="cliente">
+        <h1 class="titulo">Cliente</h1>
+
+        <div class="input">
+            <label for="idUsuario">id - Usuario</label>
+            <input type="text" name="idUsuario" id="idUsuario" disabled>
+        </div>
+
+        <div class="input">
+            <label for="nomeCliente">Nome</label>
+            <input type="text" name="nomeCliente" id="nomeCliente" value="ROBERTO">
+        </div>
+
+        <div class="input">
+            <label for="contatoCliente">Contato</label>
+            <input type="text" name="contatoCliente" id="contatoCliente">
+        </div>
+
+        <div class="input">
+            <label for="acessoCliente">CPF</label>
+            <input type="text" name="acessoCliente" id="acessoCliente">
+        </div>
+
+    </div>
+
+    <div class="veiculo">
+        <h1 class="titulo">Veiculo</h1>
+
+        <div class="imgVeiculo bgBlack" id="corVeiculoFundo">
+            <img src="./undefined.png" alt="" id="imgVeiculo">
+        </div>
+
+        <div class="input">
+            <label for="placaVeiculo">Placa</label>
+            <input type="text" name="placaVeiculo" id="placaVeiculo">
+        </div>
+
+        <div class="input">
+            <label for="tipoVeiculo">Tipo Veiculo</label>
+
+            <select name="tipoVeiculo" id="tipoVeiculo">
+
+                <option value="">-</option>
+                <option value="carro">Carro</option>
+                <option value="moto">Moto</option>
+
+            </select>
+
+        </div>
+
+        <div class="input">
+            <label for="corVeiculo">Cor Veiculo</label>
+
+            <select name="corVeiculo" id="corVeiculo">
+
+                <option value="">-</option>
+                <option value="branco">Branco</option>
+                <option value="cinza">Cinza</option>
+                <option value="preto">Preto</option>
+                <option value="prata">Prata</option>
+                <option value="azul">Azul</option>
+                <option value="vermelho">Vermelho</option>
+                <option value="marrom_bege">Marrom / Bege</option>
+                <option value="verde">Verde</option>
+                <option value="laranja">Laranja</option>
+
+            </select>
+
+        </div>
+
+        <div class="btn">
+
+            <button>Concluir Cadastro</button>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block script %}
+
+<script>
+
+    // Preparando formulario
+    const formEnvio = document.getElementById("formEnvio");
+    const idUsuario = document.getElementById("idUsuario");
+    const nomeCliente = document.getElementById("nomeCliente");
+    const contatoCliente = document.getElementById("contatoCliente");
+    const acessoCliente = document.getElementById("acessoCliente");
+    const placaVeiculo = document.getElementById("placaVeiculo");
+
+    const corVeiculo = document.getElementById("corVeiculo");
+    const corVeiculoFundo = document.getElementById("corVeiculoFundo");
+    const tipoVeiculo = document.getElementById("tipoVeiculo");
+
+    function atualizarCampo(chave, valor) {
+        let campo = formEnvio.querySelector(`input[name=${chave}`);
+        campo.value = valor;
+    }
+
+    corVeiculo.addEventListener("change", () => {
+        let imgVeiculo = document.getElementById("imgVeiculo");
+
+        switch (corVeiculo.value) {
+            case 'branco':
+                imgVeiculo.setAttribute("class", "branco");
+                corVeiculoFundo.classList.add("bgBlack");
+                break;
+
+            case 'cinza':
+                imgVeiculo.setAttribute("class", "cinza");
+                corVeiculoFundo.classList.add("bgBlack");
+                break;
+
+            case 'preto':
+                imgVeiculo.setAttribute("class", "preto");
+                corVeiculoFundo.classList.remove("bgBlack");
+                break;
+
+            case 'prata':
+                imgVeiculo.setAttribute("class", "prata");
+                corVeiculoFundo.classList.add("bgBlack");
+                break;
+
+            case 'azul':
+                imgVeiculo.setAttribute("class", "azul");
+                corVeiculoFundo.classList.remove("bgBlack");
+                break;
+
+            case 'vermelho':
+                imgVeiculo.setAttribute("class", "vermelho");
+                corVeiculoFundo.classList.add("bgBlack");
+                break;
+
+            case 'marrom_bege':
+                imgVeiculo.setAttribute("class", "marrom_bege");
+                corVeiculoFundo.classList.add("bgBlack");
+                break;
+
+            case 'verde':
+                imgVeiculo.setAttribute("class", "verde");
+                corVeiculoFundo.classList.add("bgBlack");
+                break;
+
+            case 'laranja':
+                imgVeiculo.setAttribute("class", "laranja");
+                corVeiculoFundo.classList.add("bgBlack");
+                break;
+
+            default:
+                imgVeiculo.setAttribute("class", "");
+                corVeiculoFundo.classList.add("bgBlack");
+                break;
+        }
+    })
+
+    tipoVeiculo.addEventListener("change", () => {
+        let imgVeiculo = document.getElementById("imgVeiculo");
+
+        switch (tipoVeiculo.value) {
+            case 'moto':
+                imgVeiculo.src = "./moto.png";
+                break;
+
+            case 'carro':
+                imgVeiculo.src = "./carro.png";
+                break;
+
+            default:
+                imgVeiculo.src = "./undefined.png";
+                break;
+        }
+    })
+
+    const listaCampos = [nomeCliente, contatoCliente, acessoCliente, placaVeiculo, tipoVeiculo, corVeiculo];
+
+    listaCampos.forEach(i => {
+        i.addEventListener("change", atualizaForm)
+    });
+
+    function atualizaForm() {
+        listaCampos.forEach(i => {
+            let chave = i.id;
+            let valor = i.value;
+
+            atualizarCampo(chave, valor);
+
+            if (chave == "nomeCliente") {
+                let chave = idUsuario.id;
+                let valor = idUsuario.value;
+
+                atualizarCampo(chave, valor);
+            }
+        });
+    }
+
+</script>
+
+{% endblock %}

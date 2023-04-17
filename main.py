@@ -71,10 +71,12 @@ def loja():
     plataform = request.user_agent.string.lower()
     ip_client = request.remote_addr
 
+    print(plataform)
+
     if log_secao(ip_client) == False:
         return redirect("/")
 
-    if "android" in plataform:
+    if "android" in plataform or "iphone" in plataform:
         return render_template("mobile/loja.html")
 
     else:

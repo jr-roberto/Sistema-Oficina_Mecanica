@@ -13,6 +13,9 @@ class Veiculo:
         self.tipo_veiculo = tipo_veiculo
         self.cor_veiculo = cor_veiculo
 
+class Servico:
+    "teste"
+
 def my_conn():
     return db.connect("gom.db")
 
