@@ -10,160 +10,59 @@
     body {
         width: 100%;
         height: 100%;
+        background: lightgray;
     }
 
-    div.menu-sist {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        width: 90%;
-        padding: 10px 0;
-    }
-
-    div.menu-sist>div {
-        width: 100%;
-        font-size: 25px;
-        padding: 25px 0;
-        text-align: center;
-        background: lightblue;
-        border-bottom: solid 5px blue;
-        margin-top: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 5px black;
-        transition: .2s;
-    }
-
-    div.menu-sist>div:active {
-        scale: 1.05;
-        background: blue;
-        color: white;
-        border-bottom: solid 5px lightblue;
-    }
-
-    div.popup {
-        position: absolute;
-        background: rgba(0, 0, 0, .2);
+    div.menuSistema {
         width: 100%;
         height: 100%;
-        z-index: 99;
-        overflow: auto;
         padding: 10px;
     }
 
-    div.popup>div.frame {
+    div.menuSistema form {
         position: relative;
+        top: 100px;
+    }
+
+    div.menuSistema div.input {
         width: 100%;
-        height: 100%;
-    }
-
-    div.buscaCliente {
-        position: relative;
-        background: white;
-        width: 100%;
-        height: 60px;
-    }
-
-    div.buscaCliente>div {
-        position: absolute;
-    }
-
-    div.buscaCliente>div.input {
-        height: 100%;
-        width: calc(100% - 60px);
-        padding: 5px;
-    }
-
-    div.buscaCliente>div.input>input {
-        position: relative;
-        height: 100%;
-        width: 100%;
-        padding: 5px;
-        font-size: 20px;
-    }
-
-    div.buscaCliente>div.btnBuscar {
-        height: 60px;
-        width: 60px;
-        right: 0;
-    }
-
-    div.buscaCliente>div.btnBuscar>img {
-        width: 60px;
-    }
-
-    div.buscaCliente>div.btnBuscar>img:active {
-        scale: .90;
-    }
-
-    div.frameDados {
-        position: relative;
-        background: white;
-        width: 100%;
-        height: calc(100% - 70px);
-        margin-top: 10px;
-    }
-
-    div.frameDados>div.cliente {
-        position: relative;
-        width: 90%;
-        border-bottom: solid 5px grey;
         padding: 10px 0;
-        left: 50%;
-        transform: translateX(-50%);
-        text-align: center;
     }
 
-    div.frameDados>div.cliente>div.input {
-        width: 100%;
-        margin-top: 5px;
-    }
-
-    div.frameDados>div.cliente>div.input>input,
-    div.frameDados>div.cliente>div.input>label {
+    div.menuSistema div.input button {
         width: 100%;
         font-size: 20px;
-        padding: 5px;
+        border-radius: 10px;
+        padding: 20px 0;
+        border-bottom: solid 5px blue;
+        background: lightblue;
+        transition: .2s;
     }
 
-    div.frameDados>div.veiculo {
-        position: relative;
-        width: 90%;
-        padding: 10px 0;
-        left: 50%;
-        transform: translateX(-50%);
-        text-align: center;
+    div.menuSistema div.input button:active {
+        scale: .95;
     }
 
-    div.frameDados>div.veiculo>div.tipo_veiculo {
-        box-shadow: 0 0 5px grey;
-    }
 </style>
 {% endblock %}
 
 {% block conteudo %}
 
-<div class="menu-sist">
+<div class="menuSistema">
 
-    <form action="#">
-
-        <input type="text" name="secaoSelecionada" disabled>
-
+    <form id="formInicio" method="post">
 
         <div class="input">
-            <input type="submit" id="iniciarAtendimento" value="Iniciar Atendimento">
+            <button type="submit" name="acao" value="iniciando_atendimento">Iniciar Atendimento</button>
         </div>
-
 
         <div class="input">
-            <input type="submit" id="iniciarAtendimento" value="Iniciar Servico">
+            <button type="submit" name="acao" value="iniciando_servico" disabled>Iniciando Servico</button>
         </div>
-
 
         <div class="input">
-            <input type="submit" id="iniciarAtendimento" value="Finalizar Servico">
+            <button type="submit" name="acao" value="finalizando_servico" disabled>Finalizar Servico</button>
         </div>
-
 
     </form>
 
@@ -174,6 +73,8 @@
 {% block script %}
 <script>
 
+    /*
+    const formInicio = document.getElementById("formInicio");
     const respostaServidor = document.getElementById("respostaServidor");
 
     function reqListener() {
@@ -187,6 +88,7 @@
         req.open("GET", `http://${host}/pesquisa_cliente/${cpf}`);
         req.send();
     }
+    */
 
 </script>
 {% endblock %}

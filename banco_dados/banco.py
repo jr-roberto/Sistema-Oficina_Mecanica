@@ -8,10 +8,11 @@ class Usuario:
         self.tipo_usuario = tipo_usuario
 
 class Veiculo:
-    def __init__(self , cod_cliente , tipo_veiculo , cor_veiculo ):
+    def __init__(self , cod_cliente , tipo_veiculo , cor_veiculo , placa_veiculo ):
         self.cod_cliente = cod_cliente
         self.tipo_veiculo = tipo_veiculo
         self.cor_veiculo = cor_veiculo
+        self.placa_veiculo = placa_veiculo
 
 class Servico:
     "teste"
@@ -88,7 +89,7 @@ def ver_usuario_detalhes(cpf_usuario):
     conn.commit()
     conn.close()
 
-    return result
+    return list(result)
 
 def novo_veiculo(id_cliente,veiculo):
     conn = my_conn()
@@ -131,7 +132,7 @@ if __name__=="__main__":
     cur.execute(SQL)
 
     # Criando tabela veiculo
-    SQL = "CREATE TABLE veiculo ( id integer primary key , cod_cliente , tipo_veiculo , cor_veiculo )"
+    SQL = "CREATE TABLE veiculo ( id integer primary key , cod_cliente , tipo_veiculo , cor_veiculo , placa_veiculo )"
     cur.execute(SQL)
 
     conn.commit()

@@ -1,5 +1,6 @@
-from flask import Flask , request , render_template , redirect
+from flask import Flask , request , render_template , redirect, jsonify
 from datetime import datetime, timedelta
+from banco_dados import banco as db
 import pandas as pd
 
 # Veerifica se secao é valida 
@@ -40,6 +41,9 @@ def salvar_log(base):
     return df_novo.to_csv("banco_dados/log_secao.csv",sep=";", index=False)
 
 app  = Flask(__name__)
+app.route("static/img/moto.png")
+app.route("static/img/carro.png")
+app.route("static/img/undefined.png")
 
 @app.route("/", methods=['POST','GET'])
 def index():
@@ -82,8 +86,16 @@ def loja():
     else:
         return render_template("web/loja.html")
 
-@app.route("/servico")
+@app.route("/servico" , methods=["GET","POST"])
 def servico():
+
+    if request.method == "POST":
+        print(request.form.to_dict())
+        acao_usuario = request.form.get("acao")
+
+        if acao_usuario == "iniciando_atendimento":
+            return render_template("mobile/servico_cad_cliente.html")
+
     return render_template("mobile/servico.html")
 
 @app.route("/cliente")
@@ -92,7 +104,8 @@ def cliente():
 
 @app.route("/pesquisa_cliente/<cpf>")
 def pesq_cliente(cpf):
-    return {"resposta":f"O servidor recebeu : {cpf}"}
+    resposta = db.ver_usuario_detalhes(cpf_usuario=cpf)
+    return jsonify(resposta)
 
 if __name__ == "__main__":
     app.run(debug=True,host="0.0.0.0")

@@ -11,11 +11,12 @@
     body {
         width: 100%;
         height: 100%;
+        background: lightgray;
     }
 
     /* Formulario */
     div.formCLienteVeiculo {
-        padding: 5px;
+        padding: 15px;
     }
 
     div.formCLienteVeiculo h1.titulo {
@@ -62,10 +63,11 @@
         border-radius: 5px;
         margin-top: 5px;
         transition: .5s;
+
     }
 
     div.veiculo div.imgVeiculo.bgBlack {
-        background: black;
+        background: rgba(0, 0, 0, .6);
     }
 
     div.veiculo div.imgVeiculo img {
@@ -102,10 +104,12 @@
 
     div.veiculo div.btn button {
         width: 100%;
-        height: 100%;
-        border-radius: 10px;
         font-size: 20px;
-        transition: .1s;
+        border-radius: 10px;
+        padding: 20px 0;
+        border-bottom: solid 5px blue;
+        background: lightblue;
+        transition: .2s;
     }
 
     div.veiculo div.btn button:active {
@@ -157,7 +161,7 @@
 
 <div class="formCLienteVeiculo">
 
-    <form id="formEnvio" hidden>
+    <form id="formEnvioCliente" method="post" action="./servico">
 
         <input type="text" name="idUsuario" disabled required>
         <input type="text" name="nomeCliente" disabled required>
@@ -178,18 +182,18 @@
         </div>
 
         <div class="input">
+            <label for="acessoCliente">CPF</label>
+            <input type="number" name="acessoCliente" id="acessoCliente">
+        </div>
+
+        <div class="input">
             <label for="nomeCliente">Nome</label>
-            <input type="text" name="nomeCliente" id="nomeCliente" value="ROBERTO">
+            <input type="text" name="nomeCliente" id="nomeCliente">
         </div>
 
         <div class="input">
             <label for="contatoCliente">Contato</label>
             <input type="text" name="contatoCliente" id="contatoCliente">
-        </div>
-
-        <div class="input">
-            <label for="acessoCliente">CPF</label>
-            <input type="text" name="acessoCliente" id="acessoCliente">
         </div>
 
     </div>
@@ -198,7 +202,7 @@
         <h1 class="titulo">Veiculo</h1>
 
         <div class="imgVeiculo bgBlack" id="corVeiculoFundo">
-            <img src="./undefined.png" alt="" id="imgVeiculo">
+            <img src="static/img/undefined.png" alt="" id="imgVeiculo">
         </div>
 
         <div class="input">
@@ -241,7 +245,7 @@
 
         <div class="btn">
 
-            <button>Concluir Cadastro</button>
+            <button id="envioDadosServidor">Concluir Cadastro</button>
 
         </div>
 
@@ -256,12 +260,13 @@
 <script>
 
     // Preparando formulario
-    const formEnvio = document.getElementById("formEnvio");
+    const formEnvio = document.getElementById("formEnvioCliente");
     const idUsuario = document.getElementById("idUsuario");
     const nomeCliente = document.getElementById("nomeCliente");
     const contatoCliente = document.getElementById("contatoCliente");
     const acessoCliente = document.getElementById("acessoCliente");
     const placaVeiculo = document.getElementById("placaVeiculo");
+    const envioDadosServidor = document.getElementById("envioDadosServidor");
 
     const corVeiculo = document.getElementById("corVeiculo");
     const corVeiculoFundo = document.getElementById("corVeiculoFundo");
@@ -333,15 +338,15 @@
 
         switch (tipoVeiculo.value) {
             case 'moto':
-                imgVeiculo.src = "./moto.png";
+                imgVeiculo.src = "./static/img/moto.png";
                 break;
 
             case 'carro':
-                imgVeiculo.src = "./carro.png";
+                imgVeiculo.src = "./static/img/carro.png";
                 break;
 
             default:
-                imgVeiculo.src = "./undefined.png";
+                imgVeiculo.src = "./static/img/undefined.png";
                 break;
         }
     })
@@ -367,6 +372,45 @@
             }
         });
     }
+
+    let respostaServidor = null;
+
+    acessoCliente.addEventListener("change",()=>{
+        if (acessoCliente.value){
+            pesquisaCliente(acessoCliente.value);
+        }
+    })
+
+    function reqListener() {
+        respostaServidor = this.responseText;
+        let res = JSON.parse(respostaServidor);
+
+        if (res.length === 0){
+            idUsuario.value = "Novo Usuario";
+        }
+
+        if (res.length > 0) {
+            if (res.length > 1){
+                window.alert("Mais de um usuario com esse CPF contate o ADM!")
+            }else {
+                
+
+
+            }
+        }
+    }
+
+    function pesquisaCliente(cpf) {
+        const req = new XMLHttpRequest();
+        let host = document.location.host;
+        req.addEventListener("load", reqListener);
+        req.open("GET", `http://${host}/pesquisa_cliente/${cpf}`);
+        req.send();
+    }
+
+    envioDadosServidor.addEventListener("click",()=>{
+        formEnvio.submit();
+    });
 
 </script>
 
