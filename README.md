@@ -35,11 +35,6 @@ python main.py
 
 # Capturas realizadas no desenvolvimento
 
-Login:					capturas_telas\00_login.png
+![2023-04-21_17-41-35](https://user-images.githubusercontent.com/91014834/233740981-5e63ccde-54b0-4c55-a558-52cf1c25b9e4.gif)
 
-Login_V2:				capturas_telas\00_Nova_Tela_Loginpng
-
-Tela Funcioario - Servico:	capturas_telas\01_loja_tela_servico.png
-
-![image](https://user-images.githubusercontent.com/91014834/229290474-db1f88ed-fed6-4286-9e54-5418fb8848a3.png)
 
