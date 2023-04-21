@@ -1,4 +1,5 @@
 import sqlite3 as db
+import os
 
 class Usuario:
     def __init__( self , nome_completo , contato , cpf_acesso , tipo_usuario ):
@@ -8,8 +9,7 @@ class Usuario:
         self.tipo_usuario = tipo_usuario
 
 class Veiculo:
-    def __init__(self , cod_cliente , tipo_veiculo , cor_veiculo , placa_veiculo ):
-        self.cod_cliente = cod_cliente
+    def __init__(self , tipo_veiculo , cor_veiculo , placa_veiculo ):
         self.tipo_veiculo = tipo_veiculo
         self.cor_veiculo = cor_veiculo
         self.placa_veiculo = placa_veiculo
@@ -96,13 +96,11 @@ def novo_veiculo(id_cliente,veiculo):
     cur = conn.cursor()
     
     SQL = f"""
-    INSERT INTO veiculo ( cod_cliente , tipo_veiculo , cor_veiculo )
-    VALUES ( {id_cliente} ,'{veiculo.tipo_veiculo}','{veiculo.cor_veiculo}' )
+    INSERT INTO veiculo ( cod_cliente , tipo_veiculo , cor_veiculo , placa_veiculo)
+    VALUES ( {id_cliente} ,'{veiculo.tipo_veiculo}','{veiculo.cor_veiculo}' , '{veiculo.placa_veiculo}' )
     """
 
     cur.execute(SQL)
-
-
 
     conn.commit()
     conn.close()
@@ -124,16 +122,28 @@ def ver_veiculo_usu(id_cliente):
     return result
 
 if __name__=="__main__":
+
+    if os.path.isfile('gom.db'):
+        os.remove('gom.db')
+
     conn = my_conn()
     cur = conn.cursor()
 
     # Criando tabela usuario
-    SQL = "CREATE TABLE usuario ( id integer primary key , nome_completo , contato , cpf_acesso , tipo_usuario )"
+    SQL = "CREATE TABLE usuario ( id integer primary key , nome_completo text , contato text , cpf_acesso text , tipo_usuario text)"
     cur.execute(SQL)
 
     # Criando tabela veiculo
-    SQL = "CREATE TABLE veiculo ( id integer primary key , cod_cliente , tipo_veiculo , cor_veiculo , placa_veiculo )"
+    SQL = "CREATE TABLE veiculo ( id integer primary key , cod_cliente integer , tipo_veiculo text , cor_veiculo text , placa_veiculo text )"
     cur.execute(SQL)
+
+    usaurio_1 = Usuario("ROBERTO GOMES","85989613249","00011122299","FUN")
+    usaurio_2 = Usuario("JOSE DA SILVA","85988888888","12345678910","CLI")
+
+    usuarios = [usaurio_1,usaurio_2]
+
+    for user in usuarios:
+        novo_usuario(user)
 
     conn.commit()
     conn.close()

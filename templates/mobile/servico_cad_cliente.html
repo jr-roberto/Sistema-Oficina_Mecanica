@@ -161,95 +161,89 @@
 
 <div class="formCLienteVeiculo">
 
-    <form id="formEnvioCliente" method="post" action="./servico">
+    <form method="post">
 
-        <input type="text" name="idUsuario" disabled required>
-        <input type="text" name="nomeCliente" disabled required>
-        <input type="text" name="contatoCliente" disabled required>
-        <input type="text" name="acessoCliente" disabled required>
-        <input type="text" name="placaVeiculo" disabled required>
-        <input type="text" name="tipoVeiculo" disabled required>
-        <input type="text" name="corVeiculo" disabled required>
+        <div class="cliente">
+            <h1 class="titulo">Cliente</h1>
+    
+            <div class="input">
+                <label for="idUsuario">id - Usuario</label>
+                <input type="text" name="idUsuario" id="idUsuario" readonly autocomplete="off">
+            </div>
+    
+            <div class="input">
+                <label for="acessoCliente">CPF</label>
+                <input type="number" name="cpf_acesso" id="acessoCliente" required autocomplete="off">
+            </div>
+    
+            <div class="input">
+                <label for="nomeCliente">Nome</label>
+                <input type="text" name="nome_completo" id="nomeCliente" required autocomplete="off">
+            </div>
+    
+            <div class="input">
+                <label for="contatoCliente">Contato</label>
+                <input type="text" name="contato" id="contatoCliente" required autocomplete="off">
+            </div>
+
+            <input type="text" name="tipo_usuario" value="CLI" hidden>
+
+        </div>
+    
+        <div class="veiculo">
+            <h1 class="titulo">Veiculo</h1>
+    
+            <div class="imgVeiculo bgBlack" id="corVeiculoFundo">
+                <img src="static/img/undefined.png" alt="" id="imgVeiculo" required autocomplete="off">
+            </div>
+    
+            <div class="input">
+                <label for="placaVeiculo">Placa</label>
+                <input type="text" name="placa_veiculo" id="placaVeiculo" required autocomplete="off">
+            </div>
+    
+            <div class="input">
+                <label for="tipoVeiculo">Tipo Veiculo</label>
+    
+                <select name="tipo_veiculo" id="tipoVeiculo" required>
+    
+                    <option value="">-</option>
+                    <option value="carro">Carro</option>
+                    <option value="moto">Moto</option>
+    
+                </select>
+    
+            </div>
+    
+            <div class="input">
+                <label for="corVeiculo">Cor Veiculo</label>
+    
+                <select name="cor_veiculo" id="corVeiculo" required>
+    
+                    <option value="">-</option>
+                    <option value="branco">Branco</option>
+                    <option value="cinza">Cinza</option>
+                    <option value="preto">Preto</option>
+                    <option value="prata">Prata</option>
+                    <option value="azul">Azul</option>
+                    <option value="vermelho">Vermelho</option>
+                    <option value="marrom_bege">Marrom / Bege</option>
+                    <option value="verde">Verde</option>
+                    <option value="laranja">Laranja</option>
+    
+                </select>
+    
+            </div>
+    
+            <div class="btn">
+    
+                <button id="envioDadosServidor" type="submit">Concluir Cadastro</button>
+    
+            </div>
+    
+        </div>
 
     </form>
-
-    <div class="cliente">
-        <h1 class="titulo">Cliente</h1>
-
-        <div class="input">
-            <label for="idUsuario">id - Usuario</label>
-            <input type="text" name="idUsuario" id="idUsuario" disabled>
-        </div>
-
-        <div class="input">
-            <label for="acessoCliente">CPF</label>
-            <input type="number" name="acessoCliente" id="acessoCliente">
-        </div>
-
-        <div class="input">
-            <label for="nomeCliente">Nome</label>
-            <input type="text" name="nomeCliente" id="nomeCliente">
-        </div>
-
-        <div class="input">
-            <label for="contatoCliente">Contato</label>
-            <input type="text" name="contatoCliente" id="contatoCliente">
-        </div>
-
-    </div>
-
-    <div class="veiculo">
-        <h1 class="titulo">Veiculo</h1>
-
-        <div class="imgVeiculo bgBlack" id="corVeiculoFundo">
-            <img src="static/img/undefined.png" alt="" id="imgVeiculo">
-        </div>
-
-        <div class="input">
-            <label for="placaVeiculo">Placa</label>
-            <input type="text" name="placaVeiculo" id="placaVeiculo">
-        </div>
-
-        <div class="input">
-            <label for="tipoVeiculo">Tipo Veiculo</label>
-
-            <select name="tipoVeiculo" id="tipoVeiculo">
-
-                <option value="">-</option>
-                <option value="carro">Carro</option>
-                <option value="moto">Moto</option>
-
-            </select>
-
-        </div>
-
-        <div class="input">
-            <label for="corVeiculo">Cor Veiculo</label>
-
-            <select name="corVeiculo" id="corVeiculo">
-
-                <option value="">-</option>
-                <option value="branco">Branco</option>
-                <option value="cinza">Cinza</option>
-                <option value="preto">Preto</option>
-                <option value="prata">Prata</option>
-                <option value="azul">Azul</option>
-                <option value="vermelho">Vermelho</option>
-                <option value="marrom_bege">Marrom / Bege</option>
-                <option value="verde">Verde</option>
-                <option value="laranja">Laranja</option>
-
-            </select>
-
-        </div>
-
-        <div class="btn">
-
-            <button id="envioDadosServidor">Concluir Cadastro</button>
-
-        </div>
-
-    </div>
 
 </div>
 
@@ -266,7 +260,6 @@
     const contatoCliente = document.getElementById("contatoCliente");
     const acessoCliente = document.getElementById("acessoCliente");
     const placaVeiculo = document.getElementById("placaVeiculo");
-    const envioDadosServidor = document.getElementById("envioDadosServidor");
 
     const corVeiculo = document.getElementById("corVeiculo");
     const corVeiculoFundo = document.getElementById("corVeiculoFundo");
@@ -351,28 +344,6 @@
         }
     })
 
-    const listaCampos = [nomeCliente, contatoCliente, acessoCliente, placaVeiculo, tipoVeiculo, corVeiculo];
-
-    listaCampos.forEach(i => {
-        i.addEventListener("change", atualizaForm)
-    });
-
-    function atualizaForm() {
-        listaCampos.forEach(i => {
-            let chave = i.id;
-            let valor = i.value;
-
-            atualizarCampo(chave, valor);
-
-            if (chave == "nomeCliente") {
-                let chave = idUsuario.id;
-                let valor = idUsuario.value;
-
-                atualizarCampo(chave, valor);
-            }
-        });
-    }
-
     let respostaServidor = null;
 
     acessoCliente.addEventListener("change",()=>{
@@ -382,19 +353,22 @@
     })
 
     function reqListener() {
-        respostaServidor = this.responseText;
-        let res = JSON.parse(respostaServidor);
+        respostaServidor = JSON.parse(this.responseText);
 
-        if (res.length === 0){
+        if (respostaServidor.length === 0){
             idUsuario.value = "Novo Usuario";
+            nomeCliente.value = null;
+            contatoCliente.value = null;
         }
 
-        if (res.length > 0) {
-            if (res.length > 1){
+        if (respostaServidor.length > 0) {
+            if (respostaServidor.length > 1){
                 window.alert("Mais de um usuario com esse CPF contate o ADM!")
             }else {
                 
-
+                idUsuario.value = respostaServidor[0][0];
+                nomeCliente.value = respostaServidor[0][1];
+                contatoCliente.value = respostaServidor[0][2];
 
             }
         }
@@ -407,10 +381,6 @@
         req.open("GET", `http://${host}/pesquisa_cliente/${cpf}`);
         req.send();
     }
-
-    envioDadosServidor.addEventListener("click",()=>{
-        formEnvio.submit();
-    });
 
 </script>
 

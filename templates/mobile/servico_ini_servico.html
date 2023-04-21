@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+{% block style %}
+
+<style>
+    * {
+        margin: 0;
+        box-sizing: border-box;
+        font-family: monospace;
+    }
+
+    body {
+        width: 100%;
+        height: 100%;
+        background: lightgray;
+    }
+
+    /* Estilo veiculo */
+    div.veiculo {
+        position: absolute;
+        width: 100%;
+        height: 100px;
+        padding: 5px;
+        display: flex;
+        border-bottom: solid 3px grey;
+    }
+
+    div.veiculo div.img {
+        position: relative;
+        width: 100px;
+        height: 100%;
+        padding: 10px;
+        box-shadow: 0 0 5px black;
+        border-radius: 5px;
+    }
+
+    div.veiculo div.img img {
+        width: 100%;
+    }
+
+    div.veiculo div.info {
+        position: relative;
+        height: 100%;
+        width: calc(100% - 100px);
+        right: 0;
+        font-size: 18px;
+        padding: 5px;
+        overflow: hidden;
+        border-radius: 15px;
+        padding-left: 15px;
+    }
+
+    div.veiculo div.info p {
+        margin-top: 2px;
+    }
+
+    /* Estilo servico */
+    div.servico {
+        position: absolute;
+        width: 100%;
+        height: calc(100% - 100px);
+        bottom: 0;
+        overflow: auto;
+        padding: 10px;
+    }
+
+    div.servico div.adicionar {
+        width: 100%;
+        height: 50px;
+        text-align: center;
+        border-radius: 20px;
+        background: rgba(0, 255, 0, .5);
+        filter: invert(31%) sepia(88%) saturate(1025%) hue-rotate(86deg) brightness(97%) contrast(108%);
+        padding: 6px 0;
+        border-bottom: solid 2px green;
+    }
+
+    div.servico div.adicionar img {
+        height: 100%;
+    }
+
+    div.servico div.finalizar {
+        width: 100%;
+        height: 50px;
+        text-align: center;
+        border-radius: 20px;
+        background: rgba(255, 255, 100, .5);
+        filter: invert(31%) sepia(88%) saturate(1025%) hue-rotate(86deg) brightness(97%) contrast(108%);
+        padding: 6px 0;
+        border-bottom: solid 2px green;
+        margin-top: 5px;
+    }
+
+    div.servico div.finalizar img {
+        height: 100%;
+    }
+
+    div.servico div.listaServico {
+        width: 100%;
+        height: calc(100% - 110px);
+        padding: 10px;
+        overflow: auto;
+        margin-top: 5px;
+        box-shadow: 0 0 2px black;
+        border-radius: 5px;
+    }
+
+    div.servico div.listaServico div.itemServico {
+        height: 100px;
+        border-left: solid 8px orange;
+        width: 100%;
+        margin-top: 8px;
+        border-radius: 10px;
+        background: lightblue;
+    }
+
+    div.servico div.listaServico div.itemServico p {
+        font-size: 20px;
+        margin-top: 5px;
+        padding-left: 10px;
+        width: 100%;
+    }
+
+    div.servico div.listaServico div.itemServico p.obs {
+        font-size: 15px;
+        height: calc(100% - 28px);
+        overflow: hidden;
+    }
+</style>
+
+{% endblock %}
+
+{% block conteudo %}
+
+<div class="veiculo">
+
+    <div class="img">
+        <img src="./static/img/carro.png" alt="">
+    </div>
+    <div class="info">
+
+        <p>Tipo.....: Carro</p>
+        <p>Cor......: Preto</p>
+        <p>Placa....: PNN-4553</p>
+
+    </div>
+
+</div>
+
+<div class="servico">
+
+    <div class="adicionar">
+        <img src="./static/img/adicionar.png" alt="">
+    </div>
+
+    <div class="finalizar">
+        <img src="./static/img/finalizar.png" alt="">
+    </div>
+
+    <div class="listaServico">
+
+        <div class="itemServico">
+
+            <p>Reparo...: Realizado</p>
+            <p class="obs">Obs......:<br>
+                Foi realizado reparo na bidoba da radioala
+            </p>
+
+        </div>
+
+        <div class="itemServico">
+
+            <p>Reparo...: Realizado</p>
+            <p class="obs">Obs......:<br>
+                Foi realizado reparo na bidoba da radioala
+            </p>
+
+        </div>
+
+        <div class="itemServico">
+
+            <p>Reparo...: Realizado</p>
+            <p class="obs">Obs......:<br>
+                Foi realizado reparo na bidoba da radioala
+            </p>
+
+        </div>
+
+        <div class="itemServico">
+
+            <p>Reparo...: Realizado</p>
+            <p class="obs">Obs......:<br>
+                Foi realizado reparo na bidoba da radioala
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block script %}
+
+<script>
+
+
+</script>
+
+{% endblock %}

@@ -57,7 +57,13 @@
         </div>
 
         <div class="input">
-            <button type="submit" name="acao" value="iniciando_servico" disabled>Iniciando Servico</button>
+
+            {% if atendimento %}
+                <button type="submit" name="acao" value="iniciando_servico">Iniciando Servico</button>
+            {% else %}
+                <button type="submit" name="acao" value="iniciando_servico" disabled>Iniciando Servico</button>
+            {% endif %}
+            
         </div>
 
         <div class="input">
@@ -68,10 +74,18 @@
 
 </div>
 
+    {% if atendimento %}
+        <textarea name="" id="atendimento" cols="30" rows="10" style=" position: absolute; display: none;">{{ atendimento }}</textarea>
+    {% endif %}
+
 {% endblock %}
 
 {% block script %}
 <script>
+
+    const atend = document.getElementById("atendimento");
+    const formAtendimento = document.getElementById("formInicio");
+
 
     /*
     const formInicio = document.getElementById("formInicio");

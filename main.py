@@ -3,6 +3,8 @@ from datetime import datetime, timedelta
 from banco_dados import banco as db
 import pandas as pd
 
+import json
+
 # Veerifica se secao é valida 
 def log_secao(ip_alvo):
     agora = datetime.now()
@@ -44,6 +46,7 @@ app  = Flask(__name__)
 app.route("static/img/moto.png")
 app.route("static/img/carro.png")
 app.route("static/img/undefined.png")
+app.route("static/img/adicionar.png")
 
 @app.route("/", methods=['POST','GET'])
 def index():
@@ -90,11 +93,48 @@ def loja():
 def servico():
 
     if request.method == "POST":
-        print(request.form.to_dict())
         acao_usuario = request.form.get("acao")
 
-        if acao_usuario == "iniciando_atendimento":
-            return render_template("mobile/servico_cad_cliente.html")
+        # Se vier formulario secao
+        if acao_usuario:
+
+            # Secao - iniciar atendimento
+            if acao_usuario == "iniciando_atendimento":
+                return render_template("mobile/servico_cad_cliente.html")
+            
+            if acao_usuario == "iniciando_servico":
+                return render_template("mobile/servico_ini_servico.html")
+
+        d_atendimento = request.form
+
+        id_cliente = d_atendimento.get('idUsuario')
+
+        # Cadastrando novo usuario
+        if id_cliente == 'Novo Usuario':
+            
+            novo_usuario = db.Usuario(
+                nome_completo=d_atendimento.get('nome_completo'),
+                contato=d_atendimento.get('contato'),
+                cpf_acesso=d_atendimento.get('cpf_acesso'),
+                tipo_usuario=d_atendimento.get('tipo_usuario')
+            )
+            
+            db.novo_usuario(novo_usuario)
+
+        id_cliente = db.ver_usuario_detalhes(d_atendimento.get('cpf_acesso'))
+
+        veiculo = db.Veiculo(
+            tipo_veiculo=d_atendimento.get('tipo_veiculo'),
+            cor_veiculo=d_atendimento.get('cor_veiculo'),
+            placa_veiculo=d_atendimento.get('placa_veiculo')
+        )
+        
+        db.novo_veiculo( id_cliente=id_cliente[0][0] , veiculo=veiculo)
+        
+        resposta = d_atendimento.to_dict()
+        resposta = json.dumps(resposta)
+        
+        return render_template("mobile/servico.html", atendimento=resposta )
 
     return render_template("mobile/servico.html")
 
