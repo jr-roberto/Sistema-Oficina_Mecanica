@@ -70,7 +70,7 @@ def index():
         return render_template("mobile/login.html")
 
     else:
-        return render_template("web/login.html")
+        return render_template("mobile/login.html")
 
 @app.route("/loja")
 def loja():
@@ -87,7 +87,7 @@ def loja():
         return render_template("mobile/loja.html")
 
     else:
-        return render_template("web/loja.html")
+        return render_template("mobile/loja.html")
 
 @app.route("/servico" , methods=["GET","POST"])
 def servico():

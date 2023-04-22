@@ -10,7 +10,7 @@
 <form class="mobile" method="post" id="formLogin">
 
     <div class="input">
-        <label for="usuario" >Identifique se com (CPF)</label>
+        <label for="usuario" tabindex="0">Identifique se com (CPF)</label>
         <input type="number" name="usuario" id="usuario" autocomplete="off">
     </div>
 
@@ -22,8 +22,8 @@
     -->
 
     <div class="entrar">
-        <input type="button" value="Cliente" id="cliente">
-        <input type="button" value="Funcionario" id="funcionario">
+        <input type="button" value="Cliente" id="cliente" tabindex="1">
+        <input type="button" value="Funcionario" id="funcionario" tabindex="2">
     </div>
 
 </form>
@@ -31,5 +31,5 @@
 {% endblock %}
 
 {% block script %}
-<script src="{{ url_for('static',filename='js/login.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/login.js') }}"></script>
 {% endblock %}
