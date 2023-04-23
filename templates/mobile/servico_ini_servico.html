@@ -12,7 +12,10 @@
         width: 100%;
         height: 100%;
         background: lightgray;
+        transition: .2s;
     }
+
+    div {user-select: none;}
 
     /* Estilo veiculo */
     div.veiculo {
@@ -63,15 +66,18 @@
         padding: 10px;
     }
 
+    div.servico.desable {
+        filter: blur(10px);
+    }
+
     div.servico div.adicionar {
         width: 100%;
-        height: 50px;
+        height: 60px;
         text-align: center;
         border-radius: 20px;
-        background: rgba(0, 255, 0, .5);
-        filter: invert(31%) sepia(88%) saturate(1025%) hue-rotate(86deg) brightness(97%) contrast(108%);
+        background: rgba(255, 172, 28, .8);
         padding: 6px 0;
-        border-bottom: solid 2px green;
+        border-bottom: solid 2px orange;
     }
 
     div.servico div.adicionar img {
@@ -80,14 +86,14 @@
 
     div.servico div.finalizar {
         width: 100%;
-        height: 50px;
+        height: 60px;
         text-align: center;
         border-radius: 20px;
         background: rgba(255, 255, 100, .5);
         filter: invert(31%) sepia(88%) saturate(1025%) hue-rotate(86deg) brightness(97%) contrast(108%);
         padding: 6px 0;
         border-bottom: solid 2px green;
-        margin-top: 5px;
+        margin-top: 10px;
     }
 
     div.servico div.finalizar img {
@@ -96,10 +102,10 @@
 
     div.servico div.listaServico {
         width: 100%;
-        height: calc(100% - 110px);
+        height: calc(100% - 140px);
         padding: 10px;
         overflow: auto;
-        margin-top: 5px;
+        margin-top: 10px;
         box-shadow: 0 0 2px black;
         border-radius: 5px;
     }
@@ -125,6 +131,59 @@
         height: calc(100% - 28px);
         overflow: hidden;
     }
+
+    /*Add servico Item popup*/
+    div.addServicoItemPopUp {
+        background: rgba(0, 0, 0, .5);
+        position: absolute;
+        width: 100%;
+        height: calc(100% - 100px);
+        bottom: 0;
+        scale: 0;
+        padding: 30px;
+    }
+
+    div.addServicoItemPopUp.visible {
+        scale: 1;
+    }
+
+    div.addServicoItemPopUp div.input {
+        width: 100%;
+        padding: 5px 0;
+        margin-top: 10px;
+    }
+
+    div.addServicoItemPopUp div.input label {
+        background: rgba(255, 255, 255, .5);
+    }
+
+    div.addServicoItemPopUp div.input label,
+    div.addServicoItemPopUp div.input input,
+    div.addServicoItemPopUp div.input textarea {
+        width: 100%;
+        padding: 5px;
+        font-size: 18px;
+    }
+
+    div.addServicoItemPopUp div.input input,
+    div.addServicoItemPopUp div.input textarea {
+        margin-top: 8px;
+    }
+
+    div.addServicoItemPopUp div.input textarea {
+        height: 100px;
+    }
+
+    div.addServicoItemPopUp div.input input[type="button"] {
+        margin: 0;
+        position: relative;
+        font-size: 20px;
+        border-radius: 10px;
+        padding: 10px;
+        bottom: 0;
+    }
+
+
 </style>
 
 {% endblock %}
@@ -146,55 +205,38 @@
 
 </div>
 
-<div class="servico">
+<div class="servico" id="displayServico">
 
-    <div class="adicionar">
+    <div class="adicionar" id="formNovoReparo">
         <img src="./static/img/adicionar.png" alt="">
+    </div>
+
+    <div class="listaServico" id="listaServico">
     </div>
 
     <div class="finalizar">
         <img src="./static/img/finalizar.png" alt="">
     </div>
 
-    <div class="listaServico">
+</div>
 
-        <div class="itemServico">
+<div class="addServicoItemPopUp" id="popup">
 
-            <p>Reparo...: Realizado</p>
-            <p class="obs">Obs......:<br>
-                Foi realizado reparo na bidoba da radioala
-            </p>
-
-        </div>
-
-        <div class="itemServico">
-
-            <p>Reparo...: Realizado</p>
-            <p class="obs">Obs......:<br>
-                Foi realizado reparo na bidoba da radioala
-            </p>
-
-        </div>
-
-        <div class="itemServico">
-
-            <p>Reparo...: Realizado</p>
-            <p class="obs">Obs......:<br>
-                Foi realizado reparo na bidoba da radioala
-            </p>
-
-        </div>
-
-        <div class="itemServico">
-
-            <p>Reparo...: Realizado</p>
-            <p class="obs">Obs......:<br>
-                Foi realizado reparo na bidoba da radioala
-            </p>
-
-        </div>
-
+    <div class="input">
+        <label for="servicoRealizado">Reparo realizado</label>
+        <input type="text" name="servico_reralizado" id="servicoRealizado" autocomplete="off">
     </div>
+
+    <div class="input">
+        <label for="servicoRealizadoObs">Observação</label>
+        <textarea name="obs_servico" id="servicoRealizadoObs" cols="30" rows="10" autocomplete="off"></textarea>
+    </div>
+
+    <div class="input">
+        <input type="button" value="Cadastrar" id="addReparo">
+    </div>
+
+    <strong></strong>
 
 </div>
 
@@ -204,6 +246,63 @@
 
 <script>
 
+    const formNovoReparo = document.getElementById("formNovoReparo");
+    const addReparo = document.getElementById("addReparo");
+    const listaServico = document.getElementById("listaServico");
+
+    formNovoReparo.addEventListener("click",novoReparo);
+
+    function novoReparo(){
+        let popup = document.getElementById("popup");
+        let displayServico = document.getElementById("displayServico");
+
+        popup.classList.toggle("visible");
+        displayServico.classList.toggle("desable");
+    }
+
+    addReparo.addEventListener("click",()=>{
+        let servicoRealizado = document.getElementById("servicoRealizado");
+        let servicoRealizadoObs = document.getElementById("servicoRealizadoObs");
+
+        if ( servicoRealizado.value !== null )
+        {   
+            // Instanciando elementos na memoria
+            let itemServico = document.createElement("div");
+            let reparoRealizado = document.createElement("p");
+            let obsReparo = document.createElement("p");
+
+            // Definindo class
+            itemServico.classList.add("itemServico");
+            obsReparo.classList.add("obs");
+            
+            // Definindo conteudos das tags <p>
+            reparoRealizado.innerHTML = `<strong>Serviço : ${servicoRealizado.value}</strong>`
+            obsReparo.innerHTML = `Obs : ${servicoRealizadoObs.value}`
+
+            // Unindo elemento instanciados
+            itemServico.appendChild(reparoRealizado);
+            itemServico.appendChild(obsReparo);
+
+            // Inserindo um novo reparo
+            listaServico.appendChild(itemServico);
+            
+            novoReparo();
+        }
+
+        servicoRealizado.value = null;
+        servicoRealizadoObs.value = null;
+    })
+
+    `
+    <div class="itemServico">
+
+        <p>Reparo...: Realizado</p>
+        <p class="obs">Obs......:
+            <br>Foi realizado reparo na bidoba da radioala
+        </p>
+
+    </div>
+    `
 
 </script>
 

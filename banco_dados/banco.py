@@ -121,7 +121,7 @@ def ver_veiculo_usu(id_cliente):
  
     return result
 
-if __name__=="__main__":
+if __name__ == "__main__" :
 
     if os.path.isfile('gom.db'):
         os.remove('gom.db')
@@ -135,6 +135,10 @@ if __name__=="__main__":
 
     # Criando tabela veiculo
     SQL = "CREATE TABLE veiculo ( id integer primary key , cod_cliente integer , tipo_veiculo text , cor_veiculo text , placa_veiculo text )"
+    cur.execute(SQL)
+
+    # Criando tabela veiculo
+    SQL = "CREATE TABLE servico ( id integer primary key , cod_cliente integer , tipo_veiculo text , cor_veiculo text , placa_veiculo text )"
     cur.execute(SQL)
 
     usaurio_1 = Usuario("ROBERTO GOMES","85989613249","00011122299","FUN")
