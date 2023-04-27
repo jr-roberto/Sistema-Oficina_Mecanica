@@ -1,9 +1,14 @@
 from flask import Flask , request , render_template , redirect, jsonify
 from datetime import datetime, timedelta
-from .banco_dados import banco as db
+from banco_dados import banco as db
 import pandas as pd
 
 import json
+
+class Dict2Class(object):
+    def __init__(self, my_dict):
+        for key in my_dict:
+            setattr(self, key, my_dict[key])
 
 # Veerifica se secao é valida 
 def log_secao(ip_alvo):
@@ -91,19 +96,44 @@ def loja():
 
 @app.route("/servico" , methods=["GET","POST"])
 def servico():
-
     if request.method == "POST":
-        acao_usuario = request.form.get("acao")
+
+        menu_opcao = request.form.get("acao")
+        menu_servico = request.form.get("acao_servico")
+
+        if menu_servico:
+            if menu_servico == 'Adicionar':
+                servico = db.Servico()
+                servico.id_cliente = request.form.get("idCliente")
+                servico.nome_cliente = request.form.get("nome_cliente")
+                servico.placa_veiculo = request.form.get("placa_veiculo")
+                servico.servico_realizado = request.form.get("servico_realizado")
+                servico.obs_servico = request.form.get("obs_servico")
+
+                input(servico.__dict__)
+
+                db.novo_servico(servico)
+
+            if menu_servico == 'del':
+                id_servico = request.form.get("cod_cliente")
+                db.del_servico(id_servico)
 
         # Se vier formulario secao
-        if acao_usuario:
+        if menu_opcao:
 
             # Secao - iniciar atendimento
-            if acao_usuario == "iniciando_atendimento":
+            if menu_opcao == "iniciando_atendimento":
                 return render_template("mobile/servico_cad_cliente.html")
             
-            if acao_usuario == "iniciando_servico":
-                return render_template("mobile/servico_ini_servico.html")
+            if menu_opcao == "iniciando_servico":
+                front_atendimento = request.form.get("front_atendimento")
+
+                my_obj = json.loads(front_atendimento)
+                atendimento = Dict2Class(my_obj)
+
+                
+
+                return render_template("mobile/servico_ini_servico.html",atendimento=atendimento)
 
         d_atendimento = request.form
 
@@ -123,13 +153,16 @@ def servico():
 
         id_cliente = db.ver_usuario_detalhes(d_atendimento.get('cpf_acesso'))
 
-        veiculo = db.Veiculo(
-            tipo_veiculo=d_atendimento.get('tipo_veiculo'),
-            cor_veiculo=d_atendimento.get('cor_veiculo'),
-            placa_veiculo=d_atendimento.get('placa_veiculo')
-        )
-        
-        db.novo_veiculo( id_cliente=id_cliente[0][0] , veiculo=veiculo)
+        input(id_cliente)
+
+        if len(id_cliente) > 0:
+            veiculo = db.Veiculo(
+                tipo_veiculo=d_atendimento.get('tipo_veiculo'),
+                cor_veiculo=d_atendimento.get('cor_veiculo'),
+                placa_veiculo=d_atendimento.get('placa_veiculo')
+            )
+            
+            db.novo_veiculo( id_cliente=id_cliente[0][0] , veiculo=veiculo)
         
         resposta = d_atendimento.to_dict()
         resposta = json.dumps(resposta)

@@ -15,16 +15,17 @@ class Veiculo:
         self.placa_veiculo = placa_veiculo
 
 class Servico:
-    cod_cliente = None
-    cod_veiculo = None
+    id_cliente = None
+    nome_cliente = None
+    placa_veiculo = None
     servico_realizado = None
     obs_servico = None
 
 def novo_servico(servico):
 
     SQL = f"""
-    INSERT INTO servico (cod_cliente integer , cod_veiculo integer , servico_realizado text , obs_servico text )
-    VALUES ({servico.id_servico},{servico.id_veiculo},'{servico.servico_realizado}','{servico.obs_servico}')
+    INSERT INTO servico (id_cliente, nome_cliente , placa_veiculo , servico_realizado , obs_servico )
+    VALUES ({servico.id_cliente},'{servico.nome_cliente}','{servico.placa_veiculo}','{servico.servico_realizado}','{servico.obs_servico}')
     """
 
     conn = my_conn()
@@ -191,10 +192,10 @@ if __name__ == "__main__" :
     cur.execute(SQL)
 
     # Criando tabela veiculo
-    SQL = "CREATE TABLE servico ( id integer primary key , cod_cliente integer , cod_veiculo integer , servico_realizado text , obs_servico text )"
+    SQL = "CREATE TABLE servico ( id integer primary key ,id_cliente integer, nome_cliente text , placa_veiculo text , servico_realizado text , obs_servico text )"
     cur.execute(SQL)
 
-    usaurio_1 = Usuario("ROBERTO GOMES","85989613249","00011122299","FUN")
+    usaurio_1 = Usuario("ROBERTO GOMES","85989613249","1","FUN")
     usaurio_2 = Usuario("JOSE DA SILVA","85988888888","12345678910","CLI")
 
     usuarios = [usaurio_1,usaurio_2]

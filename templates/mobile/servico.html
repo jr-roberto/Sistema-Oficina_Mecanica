@@ -70,13 +70,15 @@
             <button type="submit" name="acao" value="finalizando_servico" disabled>Finalizar Servico</button>
         </div>
 
+        {% if atendimento %}
+            <textarea name="front_atendimento" id="atendimento" cols="30" rows="10" style=" position: absolute; display: none;">{{ atendimento }}</textarea>
+        {% endif %}
+
     </form>
 
 </div>
 
-    {% if atendimento %}
-        <textarea name="" id="atendimento" cols="30" rows="10" style=" position: absolute; display: none;">{{ atendimento }}</textarea>
-    {% endif %}
+
 
 {% endblock %}
 

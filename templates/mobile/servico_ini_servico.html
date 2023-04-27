@@ -174,7 +174,7 @@
         height: 100px;
     }
 
-    div.addServicoItemPopUp div.input input[type="button"] {
+    div.addServicoItemPopUp div.input input[type="submit"] {
         margin: 0;
         position: relative;
         font-size: 20px;
@@ -220,25 +220,32 @@
 
 </div>
 
-<div class="addServicoItemPopUp" id="popup">
 
-    <div class="input">
-        <label for="servicoRealizado">Reparo realizado</label>
-        <input type="text" name="servico_reralizado" id="servicoRealizado" autocomplete="off">
+<form method="post">
+
+    <div class="addServicoItemPopUp" id="popup">
+
+        <input type="text" name="idCliente" value="{{ atendimento.idUsuario }}">
+        <input type="text" name="nome_cliente" value="{{ atendimento.nome_cliente }}">
+        <input type="text" name="placa_veiculo" value="{{ atendimento.placa_veiculo }}">
+    
+        <div class="input">
+            <label for="servicoRealizado">Reparo realizado</label>
+            <input type="text" name="servico_realizado" id="servicoRealizado" autocomplete="off">
+        </div>
+    
+        <div class="input">
+            <label for="servicoRealizadoObs">Observação</label>
+            <textarea name="obs_servico" id="servicoRealizadoObs" cols="30" rows="10" autocomplete="off"></textarea>
+        </div>
+    
+        <div class="input">
+            <input type="submit" value="Adicionar" name="acao_servico" id="addReparo">
+        </div>
+    
     </div>
-
-    <div class="input">
-        <label for="servicoRealizadoObs">Observação</label>
-        <textarea name="obs_servico" id="servicoRealizadoObs" cols="30" rows="10" autocomplete="off"></textarea>
-    </div>
-
-    <div class="input">
-        <input type="button" value="Cadastrar" id="addReparo">
-    </div>
-
-    <strong></strong>
-
-</div>
+    
+</form>
 
 {% endblock %}
 
