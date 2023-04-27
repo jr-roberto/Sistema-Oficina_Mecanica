@@ -81,18 +81,7 @@ def index():
 def loja():
     # Verifica - Plataform
     plataform = request.user_agent.string.lower()
-    ip_client = request.remote_addr
-
-    print(plataform)
-
-    if log_secao(ip_client) == False:
-        return redirect("/")
-
-    if "android" in plataform or "iphone" in plataform:
-        return render_template("mobile/loja.html")
-
-    else:
-        return render_template("mobile/loja.html")
+    return render_template("mobile/loja.html")
 
 @app.route("/servico" , methods=["GET","POST"])
 def servico():
@@ -104,15 +93,22 @@ def servico():
         if menu_servico:
             if menu_servico == 'Adicionar':
                 servico = db.Servico()
-                servico.id_cliente = request.form.get("idCliente")
-                servico.nome_cliente = request.form.get("nome_cliente")
+                servico.id_cliente = request.form.get("id_cliente")
+                servico.nome_completo = request.form.get("nome_completo")
                 servico.placa_veiculo = request.form.get("placa_veiculo")
                 servico.servico_realizado = request.form.get("servico_realizado")
                 servico.obs_servico = request.form.get("obs_servico")
 
-                input(servico.__dict__)
+                my_obj = request.form.to_dict()
+                atendimento = Dict2Class(my_obj)
 
                 db.novo_servico(servico)
+
+                id_cliente = my_obj["id_cliente"]
+
+                servicos = db.con_servico(int(id_cliente))
+
+                return render_template("mobile/servico_ini_servico.html",atendimento=atendimento,servicos=servicos)
 
             if menu_servico == 'del':
                 id_servico = request.form.get("cod_cliente")
@@ -131,9 +127,11 @@ def servico():
                 my_obj = json.loads(front_atendimento)
                 atendimento = Dict2Class(my_obj)
 
-                
+                id_cliente = my_obj["id_cliente"]
 
-                return render_template("mobile/servico_ini_servico.html",atendimento=atendimento)
+                servicos = db.con_servico(int(id_cliente))
+
+                return render_template("mobile/servico_ini_servico.html",atendimento=atendimento,servicos=servicos)
 
         d_atendimento = request.form
 
@@ -152,8 +150,6 @@ def servico():
             db.novo_usuario(novo_usuario)
 
         id_cliente = db.ver_usuario_detalhes(d_atendimento.get('cpf_acesso'))
-
-        input(id_cliente)
 
         if len(id_cliente) > 0:
             veiculo = db.Veiculo(

@@ -212,6 +212,26 @@
     </div>
 
     <div class="listaServico" id="listaServico">
+
+        {% if servicos %}
+
+            {% for s in servicos %}
+            <form method="post">
+                <input type="text" name="id" value="{{ s[0] }}" hidden>
+                <div class="itemServico">
+                
+                    <p>Reparo...: {{ s[4] }}</p>
+                    <p class="obs">Obs......:
+                        <br>{{ s[5] }}
+                    </p>
+            
+                </div>
+            </form>
+            {% endfor %}
+
+
+        {% endif %}
+
     </div>
 
     <div class="finalizar">
@@ -225,9 +245,9 @@
 
     <div class="addServicoItemPopUp" id="popup">
 
-        <input type="text" name="idCliente" value="{{ atendimento.idUsuario }}">
-        <input type="text" name="nome_cliente" value="{{ atendimento.nome_cliente }}">
-        <input type="text" name="placa_veiculo" value="{{ atendimento.placa_veiculo }}">
+        <input type="text" name="id_cliente" value="{{ atendimento.id_cliente }}" hidden>
+        <input type="text" name="nome_completo" value="{{ atendimento.nome_completo }}" hidden>
+        <input type="text" name="placa_veiculo" value="{{ atendimento.placa_veiculo }}" hidden>
     
         <div class="input">
             <label for="servicoRealizado">Reparo realizado</label>
@@ -295,9 +315,6 @@
             
             novoReparo();
         }
-
-        servicoRealizado.value = null;
-        servicoRealizadoObs.value = null;
     })
 
     `

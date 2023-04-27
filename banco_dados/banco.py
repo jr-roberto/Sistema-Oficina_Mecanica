@@ -16,7 +16,7 @@ class Veiculo:
 
 class Servico:
     id_cliente = None
-    nome_cliente = None
+    nome_completo = None
     placa_veiculo = None
     servico_realizado = None
     obs_servico = None
@@ -24,9 +24,10 @@ class Servico:
 def novo_servico(servico):
 
     SQL = f"""
-    INSERT INTO servico (id_cliente, nome_cliente , placa_veiculo , servico_realizado , obs_servico )
-    VALUES ({servico.id_cliente},'{servico.nome_cliente}','{servico.placa_veiculo}','{servico.servico_realizado}','{servico.obs_servico}')
+    INSERT INTO servico (id_cliente, nome_completo , placa_veiculo , servico_realizado , obs_servico )
+    VALUES ({servico.id_cliente},'{servico.nome_completo}','{servico.placa_veiculo}','{servico.servico_realizado}','{servico.obs_servico}')
     """
+    print(SQL)
 
     conn = my_conn()
     cur = conn.cursor()
@@ -37,6 +38,23 @@ def novo_servico(servico):
     conn.close()
 
     return True
+
+def con_servico(id_cliente):
+
+    SQL = f"SELECT * FROM servico WHERE Iid_cliente={id_cliente}"
+    print(SQL)
+    conn = my_conn()
+    cur = conn.cursor()
+
+    result = cur.execute(SQL).fetchall()
+    cur.execute(SQL)
+
+
+
+    conn.commit()
+    conn.close()
+
+    return result
 
 def del_servico(id_servico):
     conn = my_conn()
@@ -154,6 +172,8 @@ def novo_veiculo(id_cliente,veiculo):
     VALUES ( {id_cliente} ,'{veiculo.tipo_veiculo}','{veiculo.cor_veiculo}' , '{veiculo.placa_veiculo}' )
     """
 
+    print(SQL)
+
     cur.execute(SQL)
 
     conn.commit()
@@ -192,7 +212,7 @@ if __name__ == "__main__" :
     cur.execute(SQL)
 
     # Criando tabela veiculo
-    SQL = "CREATE TABLE servico ( id integer primary key ,id_cliente integer, nome_cliente text , placa_veiculo text , servico_realizado text , obs_servico text )"
+    SQL = "CREATE TABLE servico ( id integer primary key ,id_cliente integer, nome_completo text , placa_veiculo text , servico_realizado text , obs_servico text )"
     cur.execute(SQL)
 
     usaurio_1 = Usuario("ROBERTO GOMES","85989613249","1","FUN")
