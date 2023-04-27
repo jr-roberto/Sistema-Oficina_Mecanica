@@ -15,7 +15,60 @@ class Veiculo:
         self.placa_veiculo = placa_veiculo
 
 class Servico:
-    "teste"
+    cod_cliente = None
+    cod_veiculo = None
+    servico_realizado = None
+    obs_servico = None
+
+def novo_servico(servico):
+
+    SQL = f"""
+    INSERT INTO servico (cod_cliente integer , cod_veiculo integer , servico_realizado text , obs_servico text )
+    VALUES ({servico.id_servico},{servico.id_veiculo},'{servico.servico_realizado}','{servico.obs_servico}')
+    """
+
+    conn = my_conn()
+    cur = conn.cursor()
+
+    cur.execute(SQL)
+
+    conn.commit()
+    conn.close()
+
+    return True
+
+def del_servico(id_servico):
+    conn = my_conn()
+    cur = conn.cursor()
+
+    SQL = f"DELETE FROM servico WHETE id={id_servico}"
+
+    try: 
+        cur.execute(SQL)
+        conn.commit()
+        conn.close()
+        return True
+
+    except:
+        conn.close()
+        return False
+
+def con_servico(id_cliente):
+
+    SQL = f"SELECT * FROM servico WHERE id_cliente={id_cliente}"
+
+    conn = my_conn()
+    cur = conn.cursor()
+
+    try: 
+        result = cur.execute(SQL).fetchall()
+        conn.commit()
+        conn.close()
+        return result
+
+    except:
+        conn.close()
+        return []
 
 def my_conn():
     return db.connect("gom.db")
@@ -138,7 +191,7 @@ if __name__ == "__main__" :
     cur.execute(SQL)
 
     # Criando tabela veiculo
-    SQL = "CREATE TABLE servico ( id integer primary key , cod_cliente integer , tipo_veiculo text , cor_veiculo text , placa_veiculo text )"
+    SQL = "CREATE TABLE servico ( id integer primary key , cod_cliente integer , cod_veiculo integer , servico_realizado text , obs_servico text )"
     cur.execute(SQL)
 
     usaurio_1 = Usuario("ROBERTO GOMES","85989613249","00011122299","FUN")

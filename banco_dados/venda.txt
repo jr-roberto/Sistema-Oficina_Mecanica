@@ -1,1 +1,0 @@
-id;status;tipo_venda;desc_vend;qnt;valor_unitario;valor_total

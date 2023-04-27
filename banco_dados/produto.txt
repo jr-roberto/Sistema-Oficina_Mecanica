@@ -1,1 +1,0 @@
-id;desc_produto;valor_compra;valor_venda
