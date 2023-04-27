@@ -1,6 +1,6 @@
 from flask import Flask , request , render_template , redirect, jsonify
 from datetime import datetime, timedelta
-from banco_dados import banco as db
+from .banco_dados import banco as db
 import pandas as pd
 
 import json
